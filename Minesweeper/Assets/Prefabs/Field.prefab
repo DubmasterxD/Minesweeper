@@ -142,9 +142,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0a898fbc036370418ba26f44a94d5d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  correctColor: {r: 0.7307761, g: 0.94789, b: 0.9622642, a: 1}
-  mineColor: {r: 1, g: 0.4764151, b: 0.4764151, a: 1}
   numberOfMinesNearbyText: {fileID: 6672347358317476883}
+  isMine: 0
+  isFlagged: 0
+  isRevealed: 1
 --- !u!1 &5292391006787118108
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,7 +205,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

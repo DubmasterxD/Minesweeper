@@ -1,31 +1,59 @@
-﻿using UnityEngine;
+﻿using Minesweeper.Colors;
+using UnityEngine;
 using UnityEngine.UI;
 
-namespace Minesweeper
+namespace Minesweeper.General
 {
     public class Options : MonoBehaviour
     {
         [SerializeField] InputField rowsNumberInput = null;
         [SerializeField] InputField columnsNumberInput = null;
         [SerializeField] InputField minesNumberInput = null;
-        [SerializeField] Colors[] colorSets = null;
+        [SerializeField] ColorPalette[] colorSets = null;
+        [SerializeField] int maxRows = 20;
+        [SerializeField] int maxColumns = 40;
+        public int MaxRows { get => maxRows; }
+        public int MaxColumns { get => maxColumns; }
 
-        public Colors currentColors { get; private set; } = null;
         public int rowsNumber { get; private set; } = 10;
         public int columnsNumber { get; private set; } = 10;
         public int minesNumber { get; private set; } = 10;
-        public int flagsLeft { get; private set; } = 10;
+        ColorPalette currentColors = null;
 
-        ColorChanger colorChanger = null;
+        ColorChanger colorChanger;
+        GameManager game;
 
         private void Awake()
         {
+            game = FindObjectOfType<GameManager>();
             colorChanger = FindObjectOfType<ColorChanger>();
         }
 
         private void Start()
         {
             ChangeColors(0);
+            if (game != null)
+            {
+                game.onGameStart += GameStart;
+            }
+        }
+
+        public void GameStart()
+        {
+            gameObject.SetActive(false);
+            game.SetWindowSize(rowsNumber, columnsNumber);
+        }
+
+        public ColorPalette GetCurrentColors()
+        {
+            if (currentColors != null)
+            {
+                return currentColors;
+            }
+            else
+            {
+                return new ColorPalette();
+            }
         }
 
         public void ToggleNightMode(bool turnOn)
@@ -38,21 +66,6 @@ namespace Minesweeper
             {
                 ChangeColors(0);
             }
-        }
-
-        public void UseFlag()
-        {
-            flagsLeft--;
-        }
-
-        public void ReturnFlag()
-        {
-            flagsLeft++;
-        }
-
-        public void ResetFlags()
-        {
-            flagsLeft = minesNumber;
         }
 
         public void ChangeMinesNumber(float newNumber)
