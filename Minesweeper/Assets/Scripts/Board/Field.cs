@@ -8,6 +8,9 @@ namespace Minesweeper.Board
     public class Field : MonoBehaviour
     {
         [SerializeField] Text numberOfMinesNearbyText = null;
+        [SerializeField] AudioClip revealSound = null;
+        [SerializeField] AudioClip flagSound = null;
+        [SerializeField] AudioClip bombSound = null;
 
         public bool isMine { get; set; } = false;
         bool isFlagged = false;
@@ -20,6 +23,7 @@ namespace Minesweeper.Board
         GameManager game;
         Options options;
         Info info;
+        Audio audio;
 
         private void Awake()
         {
@@ -28,6 +32,7 @@ namespace Minesweeper.Board
             game = FindObjectOfType<GameManager>();
             options = FindObjectOfType<Options>();
             info = FindObjectOfType<Info>();
+            audio = FindObjectOfType<Audio>();
         }
 
         public void ResetField()
@@ -52,16 +57,19 @@ namespace Minesweeper.Board
                 if (flag.isFlaggingMode)
                 {
                     ToggleFlagField();
+                    audio.Play(flagSound);
                 }
                 else if (!isFlagged)
                 {
                     if (isMine)
                     {
                         game.GameOver(false);
+                        audio.Play(bombSound);
                         return;
                     }
                     else
                     {
+                        audio.Play(revealSound);
                         RevealField();
                     }
                 }

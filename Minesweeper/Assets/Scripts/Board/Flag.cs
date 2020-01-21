@@ -7,17 +7,20 @@ namespace Minesweeper.Board
 {
     public class Flag : MonoBehaviour
     {
+        [SerializeField] AudioClip toggleFlag = null;
         public bool isFlaggingMode { get; private set; } = false;
 
         Image image;
         GameManager game;
         Options options;
+        Audio audio;
         
         private void Awake()
         {
             game = FindObjectOfType<GameManager>();
             options = FindObjectOfType<Options>();
             image = GetComponent<Image>();
+            audio = FindObjectOfType<Audio>();
         }
 
         private void Start()
@@ -51,6 +54,7 @@ namespace Minesweeper.Board
 
         private void ToggleFlag()
         {
+            audio.Play(toggleFlag);
             if (isFlaggingMode)
             {
                 UnsetFlagginMode();

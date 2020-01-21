@@ -11,10 +11,19 @@ namespace Minesweeper.General
 
         [SerializeField] Text gameEndInfo = null;
         [SerializeField] RectTransform infoArea = null;
+        [SerializeField] ParticleSystem victoryParticles = null;
+        [SerializeField] ParticleSystem looseParticles = null;
 
         public int tileSize { get; set; } = 0;
         public bool isPlaying { get; private set; } = false;
         int spaceBetweenTiles = 3;
+
+        Camera mainCam;
+
+        private void Awake()
+        {
+            mainCam = Camera.main;
+        }
 
         private void Start()
         {
@@ -36,15 +45,17 @@ namespace Minesweeper.General
             isPlaying = false;
             if (gameEndInfo != null)
             {
+                gameEndInfo.gameObject.SetActive(true);
                 if (isWin)
                 {
                     gameEndInfo.text = "Victory!";
+                    victoryParticles.Play();
                 }
                 else
                 {
                     gameEndInfo.text = "Game Over :(";
+                    looseParticles.Play();
                 }
-                gameEndInfo.gameObject.SetActive(true);
             }
             onGameEnd();
         }
@@ -55,6 +66,7 @@ namespace Minesweeper.General
             int width = columnsNumber * (tileSize + spaceBetweenTiles) - spaceBetweenTiles;
             Screen.SetResolution(width, height, false);
             gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
+            mainCam.orthographicSize = height / 200f;
         }
     }
 }

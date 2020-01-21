@@ -143,9 +143,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfMinesNearbyText: {fileID: 6672347358317476883}
-  isMine: 0
-  isFlagged: 0
-  isRevealed: 1
+  revealSound: {fileID: 8300000, guid: 36a75d500c877514099c243eff9ff0b3, type: 3}
+  flagSound: {fileID: 8300000, guid: 4ddf7133b543c77489e853787c411c82, type: 3}
+  bombSound: {fileID: 8300000, guid: 4395a019bf47aeb43a0fa849eb2ae8fb, type: 3}
 --- !u!1 &5292391006787118108
 GameObject:
   m_ObjectHideFlags: 0
